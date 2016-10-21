@@ -1,0 +1,92 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="in.hedera.reku.capstone.travel.TicketFragment"
+    android:background="@android:color/darker_gray"
+    android:padding="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <TextView
+            android:text="DoJ : 29/11/2016 7PM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ticket_container"
+            android:layout_below="@+id/textView11">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bengaluru"
+                android:layout_below="@+id/textView10"
+                android:padding="5dp"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <View
+                android:layout_width="7dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5sp"
+                android:background="@color/colorAccent"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anantapur"
+                android:id="@+id/textView10"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:padding="5dp"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Service No. 689367"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/textView12"
+                android:padding="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tkt No. : 1234567890"
+                android:layout_below="@+id/textView12"
+                android:layout_alignParentRight="true"
+                android:id="@+id/ticket_pnr"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seats: 7,8"
+                android:layout_below="@+id/ticket_pnr"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</FrameLayout>

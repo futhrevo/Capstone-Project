@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,50 +15,13 @@
             class="in.hedera.reku.capstone.promo.OfferFragment"
             android:layout="@layout/sub_fragment_offer"
             android:id="@+id/offer_fragment"
-            android:layout_marginBottom="4dp" />
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.promo.OfferFragment"
-            android:layout="@layout/sub_fragment_offer"
-            android:id="@+id/offer_fragment1"
-            android:layout_marginBottom="4dp" />
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.promo.OfferFragment"
-            android:layout="@layout/sub_fragment_offer"
-            android:id="@+id/offer_fragment2"
-            android:layout_marginBottom="4dp" />
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.promo.OfferFragment"
-            android:layout="@layout/sub_fragment_offer"
-            android:id="@+id/offer_fragment3"
-            android:layout_marginBottom="4dp" />
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.promo.OfferFragment"
-            android:layout="@layout/sub_fragment_offer"
-            android:id="@+id/offer_fragment4"
-            android:layout_marginBottom="4dp" />
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.promo.OfferFragment"
-            android:layout="@layout/sub_fragment_offer"
-            android:id="@+id/offer_fragment5"
-            android:layout_marginBottom="4dp" />
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.promo.OfferFragment"
-            android:layout="@layout/sub_fragment_offer"
-            android:id="@+id/offer_fragment6"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            tools:layout="@layout/sub_fragment_offer" />
+
+        <ListView android:layout_width="match_parent"
+            android:layout_weight="1" android:layout_height="wrap_content"
+            android:id="@+id/lvMsg"></ListView>
 
     </LinearLayout>
 
-</ScrollView>
+</FrameLayout>

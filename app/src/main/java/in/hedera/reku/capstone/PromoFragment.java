@@ -1,13 +1,20 @@
 package in.hedera.reku.capstone;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.Arrays;
 
 
 /**
@@ -29,6 +36,8 @@ public class PromoFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    // Cursor Adapter
+    SimpleCursorAdapter adapter;
 
     public PromoFragment() {
         // Required empty public constructor
@@ -96,6 +105,33 @@ public class PromoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Promotions");
+        ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
+
+        // Create Inbox box URI
+        Uri inboxURI = Uri.parse("content://sms/inbox");
+
+        // List required columns
+        String[] reqCols = new String[] { "_id", "address", "body" };
+
+        // Get Content Resolver object, which will deal with Content Provider
+        ContentResolver cr = getActivity().getContentResolver();
+
+        Cursor q = cr.query(inboxURI, null, null, null, null);
+//        int a = q.getColumnCount();
+//        for (int i = 0; i < a; i++){
+//            Log.i("Columns", q.)
+//        }
+        Log.i("Columns", Arrays.toString(q.getColumnNames()));
+
+        // Fetch Inbox SMS Message from Built-in Content Provider
+        Cursor c = cr.query(inboxURI, reqCols, null, null, null);
+
+        // Attached Cursor with adapter and display in listview
+        adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
+                new String[] { "body", "address" }, new int[] {
+                R.id.lblMsg, R.id.lblNumber });
+        lvMsg.setAdapter(adapter);
+
     }
     /**
      * This interface must be implemented by activities that contain this

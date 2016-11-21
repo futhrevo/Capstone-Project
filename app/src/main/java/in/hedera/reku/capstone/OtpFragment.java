@@ -1,13 +1,17 @@
 package in.hedera.reku.capstone;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 
 /**
@@ -29,6 +33,9 @@ public class OtpFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    // Cursor Adapter
+    SimpleCursorAdapter adapter;
 
     public OtpFragment() {
         // Required empty public constructor
@@ -72,6 +79,27 @@ public class OtpFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((Main2Activity) getActivity()).getSupportActionBar().setTitle("OTP");
+        ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
+
+        // Create Inbox box URI
+        Uri inboxURI = Uri.parse("content://sms/inbox");
+
+        // List required columns
+        String[] reqCols = new String[] { "_id", "address", "body" };
+
+        // Get Content Resolver object, which will deal with Content Provider
+        ContentResolver cr = getActivity().getContentResolver();
+        String selection = "body REGEXP ?";
+        String[] selectionArgs = {".*OTP.*"};
+//        String selectionArgs = "WHERE x REGEXP <regex>";
+        // Fetch Inbox SMS Message from Built-in Content Provider
+        Cursor c = cr.query(inboxURI, reqCols, selection, selectionArgs, null);
+
+        // Attached Cursor with adapter and display in listview
+        adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
+                new String[] { "body", "address" }, new int[] {
+                R.id.lblMsg, R.id.lblNumber });
+        lvMsg.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -97,7 +125,6 @@ public class OtpFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

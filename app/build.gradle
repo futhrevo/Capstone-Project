@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
@@ -26,9 +30,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
-    compile 'me.everything:providers-android:1.0.1'
-    compile 'me.everything:providers-stetho:1.0.1'
+    compile 'com.facebook.stetho:stetho:1.4.1'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
     compile 'com.android.support:support-v4:24.2.1'
     testCompile 'junit:junit:4.12'
+    compile files('libs/stanford-parser-3.4.1-models_slim.jar')
 }

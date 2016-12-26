@@ -13,6 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.io.StringReader;
+import java.util.List;
+
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
+import edu.stanford.nlp.process.CoreLabelTokenFactory;
+import edu.stanford.nlp.process.PTBTokenizer;
+import edu.stanford.nlp.process.Tokenizer;
+import edu.stanford.nlp.process.TokenizerFactory;
+import edu.stanford.nlp.trees.Tree;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +46,25 @@ public class OtpFragment extends Fragment {
 
     // Cursor Adapter
     SimpleCursorAdapter adapter;
+
+    private final static String PCG_MODEL = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";
+
+    private final TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "invertible=true");
+
+    private final LexicalizedParser parser = LexicalizedParser.loadModel(PCG_MODEL);
+
+    public Tree parse(String str) {
+        List<CoreLabel> tokens = tokenize(str);
+        Tree tree = parser.apply(tokens);
+        return tree;
+    }
+
+    private List<CoreLabel> tokenize(String str) {
+        Tokenizer<CoreLabel> tokenizer =
+                tokenizerFactory.getTokenizer(
+                        new StringReader(str));
+        return tokenizer.tokenize();
+    }
 
     public OtpFragment() {
         // Required empty public constructor
@@ -100,6 +129,18 @@ public class OtpFragment extends Fragment {
                 new String[] { "body", "address" }, new int[] {
                 R.id.lblMsg, R.id.lblNumber });
         lvMsg.setAdapter(adapter);
+
+        String str = "My dog also likes eating sausage.";
+//        Parser parser = new Parser();
+        Tree tree = parse(str);
+
+        List<Tree> leaves = tree.getLeaves();
+        // Print words and Pos Tags
+        for (Tree leaf : leaves) {
+            Tree parent = leaf.parent(tree);
+            System.out.print(leaf.label().value() + "-" + parent.label().value() + " ");
+        }
+        System.out.println();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

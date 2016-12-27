@@ -35,4 +35,6 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/stanford-parser-3.4.1-models_slim.jar')
+    compile files('libs/stanford-parser.jar')
+    compile files('libs/lingpipe-4.1.2.jar')
 }

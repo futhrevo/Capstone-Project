@@ -4,12 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
-import com.aliasi.chunk.Chunk;
-import com.aliasi.chunk.Chunking;
-import com.aliasi.dict.DictionaryEntry;
-import com.aliasi.dict.ExactDictionaryChunker;
-import com.aliasi.dict.MapDictionary;
-import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import rita.RiTa;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -20,27 +15,6 @@ import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
  */
 public class SorterService extends IntentService {
 
-    static final double CHUNK_SCORE = 1.0;
-
-//    private final static String PCG_MODEL = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";
-//
-//    private final TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "invertible=true");
-//
-//    private final LexicalizedParser parser = LexicalizedParser.loadModel(PCG_MODEL);
-
-
-//    public Tree parse(String str) {
-//        List<CoreLabel> tokens = tokenize(str);
-//        Tree tree = parser.apply(tokens);
-//        return tree;
-//    }
-//
-//    private List<CoreLabel> tokenize(String str) {
-//        Tokenizer<CoreLabel> tokenizer =
-//                tokenizerFactory.getTokenizer(
-//                        new StringReader(str));
-//        return tokenizer.tokenize();
-//    }
 
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
@@ -121,80 +95,11 @@ public class SorterService extends IntentService {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    private void testNLP(){
+    private void testNLP()  {
 
         String str = "One time Password (OTP) for your Internet banking is  VTP8EL  . If you are not accessing Net banking please contact RBL Branch Immediately.";
+        System.out.println(RiTa.getPosTagsInline(str));
 
-        MapDictionary<String> dictionary = new MapDictionary<String>();
-        dictionary.addEntry(new DictionaryEntry<String>("One Time Password","OTP",CHUNK_SCORE));
-        dictionary.addEntry(new DictionaryEntry<String>("verification code", "OTP", CHUNK_SCORE));
-
-        ExactDictionaryChunker dictionaryChunkerTT
-                = new ExactDictionaryChunker(dictionary,
-                IndoEuropeanTokenizerFactory.INSTANCE,
-                true,true);
-
-        ExactDictionaryChunker dictionaryChunkerTF
-                = new ExactDictionaryChunker(dictionary,
-                IndoEuropeanTokenizerFactory.INSTANCE,
-                true,false);
-
-        ExactDictionaryChunker dictionaryChunkerFT
-                = new ExactDictionaryChunker(dictionary,
-                IndoEuropeanTokenizerFactory.INSTANCE,
-                false,true);
-
-        ExactDictionaryChunker dictionaryChunkerFF
-                = new ExactDictionaryChunker(dictionary,
-                IndoEuropeanTokenizerFactory.INSTANCE,
-                false,false);
-
-
-
-        System.out.println("\nDICTIONARY\n" + dictionary);
-
-        chunk(dictionaryChunkerTT,str);
-        chunk(dictionaryChunkerTF,str);
-        chunk(dictionaryChunkerFT,str);
-        chunk(dictionaryChunkerFF,str);
-
-//        TreebankLanguagePack tlp = new PennTreebankLanguagePack();
-//        GrammaticalStructureFactory gsf = tlp.grammaticalStructureFactory();
-//        Tree parse = parser.parse(str);
-//        GrammaticalStructure gs = gsf.newGrammaticalStructure(parse);
-//        Collection<TypedDependency> tdl = gs.typedDependenciesCCprocessed();
-//        System.out.println(tdl);
-//        System.out.println(parse.pennString());
-
-
-////        Parser parser = new Parser();
-//        Tree tree = parse(str);
-//
-//        List<Tree> leaves = tree.getLeaves();
-//        // Print words and Pos Tags
-//        for (Tree leaf : leaves) {
-//            Tree parent = leaf.parent(tree);
-//            System.out.print(leaf.label().value() + "-" + parent.label().value() + " ");
-//        }
-//        System.out.println();
-    }
-
-    static void chunk(ExactDictionaryChunker chunker, String text) {
-        System.out.println("\nChunker."
-                + " All matches=" + chunker.returnAllMatches()
-                + " Case sensitive=" + chunker.caseSensitive());
-        Chunking chunking = chunker.chunk(text);
-        for (Chunk chunk : chunking.chunkSet()) {
-            int start = chunk.start();
-            int end = chunk.end();
-            String type = chunk.type();
-            double score = chunk.score();
-            String phrase = text.substring(start,end);
-            System.out.println("     phrase=|" + phrase + "|"
-                    + " start=" + start
-                    + " end=" + end
-                    + " type=" + type
-                    + " score=" + score);
-        }
+        System.out.println();
     }
 }

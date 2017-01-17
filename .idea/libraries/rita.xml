@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="stanford-parser">
+  <library name="rita">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/stanford-parser.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/libs/rita.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

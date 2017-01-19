@@ -1,37 +1,34 @@
 package in.hedera.reku.capstone;
 
+import android.content.ContentResolver;
 import android.content.Context;
-import android.graphics.Color;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
-import java.util.ArrayList;
+import android.widget.ListView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FinanceFragment.OnFragmentInteractionListener} interface
+ * {@link ConversationsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FinanceFragment#newInstance} factory method to
+ * Use the {@link ConversationsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FinanceFragment extends Fragment {
+public class ConversationsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    public static final String CONVERSAIONPREFINDICES = "convPrefInd";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -39,8 +36,10 @@ public class FinanceFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private PieChart mChart;
-    public FinanceFragment() {
+    // Cursor Adapter
+    SimpleCursorAdapter adapter;
+
+    public ConversationsFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +49,11 @@ public class FinanceFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FinanceFragment.
+     * @return A new instance of fragment ConversationsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FinanceFragment newInstance(String param1, String param2) {
-        FinanceFragment fragment = new FinanceFragment();
+    public static ConversationsFragment newInstance(String param1, String param2) {
+        ConversationsFragment fragment = new ConversationsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,18 +74,7 @@ public class FinanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_finance, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mChart = (PieChart) getView().findViewById(R.id.pieChart1);
-        // radius of the center hole in percent of maximum radius
-        mChart.setHoleRadius(45f);
-        mChart.setTransparentCircleRadius(50f);
-        mChart.setData(generatePieData());
-        ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Finance");
+        return inflater.inflate(R.layout.fragment_conversations, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -128,29 +116,35 @@ public class FinanceFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    /**
-     * generates less data (1 DataSet, 4 values)
-     * @return
-     */
-    protected PieData generatePieData() {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Conversations");
+        ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
 
-        int count = 4;
+        // Create Inbox box URI
+        Uri inboxURI = Uri.parse("content://sms/inbox");
 
-        ArrayList<PieEntry> entries1 = new ArrayList<PieEntry>();
+        // List required columns
+        String[] reqCols = new String[] { "_id", "address", "body" };
 
-        for(int i = 0; i < count; i++) {
-            entries1.add(new PieEntry((float) ((Math.random() * 60) + 40), "Purchase " + (i+1)));
-        }
+        // Get Content Resolver object, which will deal with Content Provider
+        ContentResolver cr = getActivity().getContentResolver();
+        String selection =  "address REGEXP ?" ;//"body LIKE ? OR body LIKE ?";  //"body REGEXP ?";
+        // http://regexlib.com/REDetails.aspx?regexp_id=73
+        String[] selectionArgs = {"^(\\(?\\+?[0-9]*\\)?)?[0-9_\\- \\(\\)]{10,}"};//{"%OTP%", "%verification code%"}; // {".*OTP.*"}
+//        String selectionArgs = "WHERE x REGEXP <regex>";
+        // Fetch Inbox SMS Message from Built-in Content Provider
+        Cursor c = cr.query(inboxURI, reqCols, selection, selectionArgs, null);
+        Utils.updatePrefValues(c,CONVERSAIONPREFINDICES,getActivity());
 
-        PieDataSet ds1 = new PieDataSet(entries1, "Monthly Expenditure");
-        ds1.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        ds1.setSliceSpace(2f);
-        ds1.setValueTextColor(Color.WHITE);
-        ds1.setValueTextSize(12f);
+        // Attached Cursor with adapter and display in listview
+        adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
+                new String[] { "body", "address" }, new int[] {
+                R.id.lblMsg, R.id.lblNumber });
+        lvMsg.setAdapter(adapter);
 
-        PieData d = new PieData(ds1);
-//        d.setValueTypeface(tf);
 
-        return d;
     }
+
 }

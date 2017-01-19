@@ -22,7 +22,7 @@
         <!--android:id="@+id/contentFragment"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--class="in.hedera.reku.capstone.TravelFragment"-->
+        <!--class="in.hedera.reku.capstone.travel.TravelFragment"-->
         <!--tools:layout="@layout/fragment_travel"/>-->
 
 </RelativeLayout>

@@ -20,11 +20,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import in.hedera.reku.capstone.bills.BillsFragment;
+import in.hedera.reku.capstone.finance.FinanceFragment;
+import in.hedera.reku.capstone.otp.OtpFragment;
+import in.hedera.reku.capstone.promo.PromoFragment;
+import in.hedera.reku.capstone.travel.TravelFragment;
+
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private static int SMS_READ_REQUEST = 0;
+    public static final String PREFS_NAME = "SmsPref";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +144,13 @@ public class Main2Activity extends AppCompatActivity
         } else if (id == R.id.nav_promo) {
             PromoFragment promoFragment = new PromoFragment();
             gotoFragment(promoFragment);
-        } else if (id == R.id.nav_share) {
+        } else if(id == R.id.nav_misc){
+            MiscFragment miscFragment = new MiscFragment();
+            gotoFragment(miscFragment);
+        } else if( id == R.id.nav_Conversations){
+            ConversationsFragment conversationsFragment = new ConversationsFragment();
+            gotoFragment(conversationsFragment);
+        }else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 

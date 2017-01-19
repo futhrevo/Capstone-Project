@@ -2,7 +2,7 @@ package in.hedera.reku.capstone;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,15 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import in.hedera.reku.capstone.otp.OtpFragment;
+
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OtpFragment.OnFragmentInteractionListener} interface
+ * {@link MiscFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link OtpFragment#newInstance} factory method to
+ * Use the {@link MiscFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OtpFragment extends Fragment {
+public class MiscFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,9 +40,7 @@ public class OtpFragment extends Fragment {
     // Cursor Adapter
     SimpleCursorAdapter adapter;
 
-
-
-    public OtpFragment() {
+    public MiscFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +50,11 @@ public class OtpFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OtpFragment.
+     * @return A new instance of fragment MiscFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OtpFragment newInstance(String param1, String param2) {
-        OtpFragment fragment = new OtpFragment();
+    public static MiscFragment newInstance(String param1, String param2) {
+        MiscFragment fragment = new MiscFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,38 +75,7 @@ public class OtpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_otp, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ((Main2Activity) getActivity()).getSupportActionBar().setTitle("OTP");
-        ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
-
-        // Create Inbox box URI
-        Uri inboxURI = Uri.parse("content://sms/inbox");
-
-        // List required columns
-        String[] reqCols = new String[] { "_id", "address", "body" };
-
-        // Get Content Resolver object, which will deal with Content Provider
-        ContentResolver cr = getActivity().getContentResolver();
-        String selection = "body REGEXP ?";
-        String[] selectionArgs = {".*OTP.*"};
-//        String selectionArgs = "WHERE x REGEXP <regex>";
-        // Fetch Inbox SMS Message from Built-in Content Provider
-        Cursor c = cr.query(inboxURI, reqCols, selection, selectionArgs, null);
-
-        // Attached Cursor with adapter and display in listview
-        adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
-                new String[] { "body", "address" }, new int[] {
-                R.id.lblMsg, R.id.lblNumber });
-        lvMsg.setAdapter(adapter);
-
-        Intent intent = new Intent(getContext(), SorterService.class);
-        getActivity().startService(intent);
-
+        return inflater.inflate(R.layout.fragment_misc, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -131,6 +101,7 @@ public class OtpFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -144,5 +115,45 @@ public class OtpFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Miscellaneous");
+        ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
+
+        SharedPreferences settings = getActivity().getSharedPreferences(Main2Activity.PREFS_NAME, 0);
+        String conversationIndices = settings.getString(ConversationsFragment.CONVERSAIONPREFINDICES, null);
+        String otpIndices = settings.getString(OtpFragment.OTPINDICES, null);
+
+        String concatIndices = Utils.concatIndices(conversationIndices,otpIndices);
+        // Create Inbox box URI
+        Uri inboxURI = Uri.parse("content://sms/inbox");
+
+        // List required columns
+        String[] reqCols = new String[] { "_id", "address", "body" };
+
+        // Get Content Resolver object, which will deal with Content Provider
+        ContentResolver cr = getActivity().getContentResolver();
+
+        Cursor c;
+        if(conversationIndices == null){
+            c = cr.query(inboxURI, reqCols, null, null, null);
+        }else{
+            String selection = "_id NOT IN " + concatIndices;  //"body REGEXP ?";
+            String[] selectionArgs =  null;//{conversationIndices}; // {".*OTP.*"}
+//        String selectionArgs = "WHERE x REGEXP <regex>";
+            // Fetch Inbox SMS Message from Built-in Content Provider
+            c = cr.query(inboxURI, reqCols, selection, selectionArgs, null);
+        }
+
+
+        // Attached Cursor with adapter and display in listview
+        adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
+                new String[] { "body", "address" }, new int[] {
+                R.id.lblMsg, R.id.lblNumber });
+        lvMsg.setAdapter(adapter);
     }
 }

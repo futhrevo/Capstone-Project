@@ -97,8 +97,13 @@ public class SorterService extends IntentService {
 
     private void testNLP()  {
 
-        String str = "One time Password (OTP) for your Internet banking is  VTP8EL  . If you are not accessing Net banking please contact RBL Branch Immediately.";
-        System.out.println(RiTa.getPosTagsInline(str));
+        String str[] = {"One time Password (OTP) for your Internet banking is  VTP8EL  . If you are not accessing Net banking please contact RBL Branch Immediately.",
+            "Mi Account verification code: 3256. This OTP expires in 5 minutes.",
+            "One time Password (OTP) for your Internet banking is  VTP8EL  . If you are not accessing Net banking please contact RBL Branch Immediately.",
+            "OTP for Mobile xxxxxx2164 is 653218 and is valid for 10 minutes. Generated at 23-09-2016 10:39:57"};
+        for (String aStr : str) {
+            System.out.println(RiTa.getPosTagsInline(aStr));
+        }
 
         System.out.println();
     }

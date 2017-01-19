@@ -1,6 +1,7 @@
-package in.hedera.reku.capstone;
+package in.hedera.reku.capstone.finance;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,16 +10,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+
+import in.hedera.reku.capstone.Main2Activity;
+import in.hedera.reku.capstone.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TravelFragment.OnFragmentInteractionListener} interface
+ * {@link FinanceFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TravelFragment#newInstance} factory method to
+ * Use the {@link FinanceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TravelFragment extends Fragment {
+public class FinanceFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +42,8 @@ public class TravelFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TravelFragment() {
+    private PieChart mChart;
+    public FinanceFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +53,11 @@ public class TravelFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TravelFragment.
+     * @return A new instance of fragment FinanceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TravelFragment newInstance(String param1, String param2) {
-        TravelFragment fragment = new TravelFragment();
+    public static FinanceFragment newInstance(String param1, String param2) {
+        FinanceFragment fragment = new FinanceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,7 +78,18 @@ public class TravelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_travel, container, false);
+        return inflater.inflate(R.layout.fragment_finance, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mChart = (PieChart) getView().findViewById(R.id.pieChart1);
+        // radius of the center hole in percent of maximum radius
+        mChart.setHoleRadius(45f);
+        mChart.setTransparentCircleRadius(50f);
+        mChart.setData(generatePieData());
+        ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Finance");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,11 +116,6 @@ public class TravelFragment extends Fragment {
         mListener = null;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Travel");
-    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -110,5 +129,31 @@ public class TravelFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /**
+     * generates less data (1 DataSet, 4 values)
+     * @return
+     */
+    protected PieData generatePieData() {
+
+        int count = 4;
+
+        ArrayList<PieEntry> entries1 = new ArrayList<PieEntry>();
+
+        for(int i = 0; i < count; i++) {
+            entries1.add(new PieEntry((float) ((Math.random() * 60) + 40), "Purchase " + (i+1)));
+        }
+
+        PieDataSet ds1 = new PieDataSet(entries1, "Monthly Expenditure");
+        ds1.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        ds1.setSliceSpace(2f);
+        ds1.setValueTextColor(Color.WHITE);
+        ds1.setValueTextSize(12f);
+
+        PieData d = new PieData(ds1);
+//        d.setValueTypeface(tf);
+
+        return d;
     }
 }

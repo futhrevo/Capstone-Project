@@ -1,31 +1,27 @@
-package in.hedera.reku.capstone;
+package in.hedera.reku.capstone.bills;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
-import java.util.Arrays;
+import in.hedera.reku.capstone.Main2Activity;
+import in.hedera.reku.capstone.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PromoFragment.OnFragmentInteractionListener} interface
+ * {@link BillsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PromoFragment#newInstance} factory method to
+ * Use the {@link BillsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PromoFragment extends Fragment {
+public class BillsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,10 +32,8 @@ public class PromoFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    // Cursor Adapter
-    SimpleCursorAdapter adapter;
 
-    public PromoFragment() {
+    public BillsFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +43,11 @@ public class PromoFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PromoFragment.
+     * @return A new instance of fragment BillsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PromoFragment newInstance(String param1, String param2) {
-        PromoFragment fragment = new PromoFragment();
+    public static BillsFragment newInstance(String param1, String param2) {
+        BillsFragment fragment = new BillsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,7 +68,13 @@ public class PromoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_promo, container, false);
+        return inflater.inflate(R.layout.fragment_bills, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Bills");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -101,38 +101,6 @@ public class PromoFragment extends Fragment {
         mListener = null;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Promotions");
-        ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
-
-        // Create Inbox box URI
-        Uri inboxURI = Uri.parse("content://sms/inbox");
-
-        // List required columns
-        String[] reqCols = new String[] { "_id", "address", "body" };
-
-        // Get Content Resolver object, which will deal with Content Provider
-        ContentResolver cr = getActivity().getContentResolver();
-
-        Cursor q = cr.query(inboxURI, null, null, null, null);
-//        int a = q.getColumnCount();
-//        for (int i = 0; i < a; i++){
-//            Log.i("Columns", q.)
-//        }
-        Log.i("Columns", Arrays.toString(q.getColumnNames()));
-
-        // Fetch Inbox SMS Message from Built-in Content Provider
-        Cursor c = cr.query(inboxURI, reqCols, null, null, null);
-
-        // Attached Cursor with adapter and display in listview
-        adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
-                new String[] { "body", "address" }, new int[] {
-                R.id.lblMsg, R.id.lblNumber });
-        lvMsg.setAdapter(adapter);
-
-    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

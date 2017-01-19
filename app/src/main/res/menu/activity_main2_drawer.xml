@@ -23,6 +23,14 @@
             android:id="@+id/nav_promo"
             android:icon="@drawable/ic_star"
             android:title="Promotions" />
+        <item
+            android:id="@+id/nav_misc"
+            android:icon="@drawable/ic_star"
+            android:title="Others"/>
+        <item
+            android:id="@+id/nav_Conversations"
+            android:icon="@drawable/ic_star"
+            android:title="Conversations"/>
     </group>
 
     <item android:title="Communicate">

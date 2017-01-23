@@ -1,6 +1,5 @@
 package in.hedera.reku.capstone;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import static in.hedera.reku.capstone.Utils.getConversationsCursor;
 
 
 /**
@@ -28,7 +30,7 @@ public class ConversationsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public static final String CONVERSAIONPREFINDICES = "convPrefInd";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -122,22 +124,10 @@ public class ConversationsFragment extends Fragment {
         ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Conversations");
         ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
 
-        // Create Inbox box URI
-        Uri inboxURI = Uri.parse("content://sms/inbox");
 
-        // List required columns
-        String[] reqCols = new String[] { "_id", "address", "body" };
 
-        // Get Content Resolver object, which will deal with Content Provider
-        ContentResolver cr = getActivity().getContentResolver();
-        String selection =  "address REGEXP ?" ;//"body LIKE ? OR body LIKE ?";  //"body REGEXP ?";
-        // http://regexlib.com/REDetails.aspx?regexp_id=73
-        String[] selectionArgs = {"^(\\(?\\+?[0-9]*\\)?)?[0-9_\\- \\(\\)]{10,}"};//{"%OTP%", "%verification code%"}; // {".*OTP.*"}
-//        String selectionArgs = "WHERE x REGEXP <regex>";
-        // Fetch Inbox SMS Message from Built-in Content Provider
-        Cursor c = cr.query(inboxURI, reqCols, selection, selectionArgs, null);
-        Utils.updatePrefValues(c,CONVERSAIONPREFINDICES,getActivity());
-
+        Cursor c = getConversationsCursor(getActivity());
+        Toast.makeText(getActivity(), String.valueOf(c.getCount()), Toast.LENGTH_SHORT).show();
         // Attached Cursor with adapter and display in listview
         adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
                 new String[] { "body", "address" }, new int[] {

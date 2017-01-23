@@ -4,20 +4,10 @@
     android:layout_height="match_parent"
     tools:context="in.hedera.reku.capstone.otp.OtpFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <fragment
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.otp.OtpItemFragment"
-            android:layout="@layout/sub_fragment_otp_item"
-            android:id="@+id/otp_item1"
-            android:layout_marginBottom="4dp"/>
+            android:id="@+id/rvMsg">
 
-        <ListView android:layout_width="match_parent"
-            android:layout_weight="1" android:layout_height="wrap_content"
-            android:id="@+id/lvMsg"></ListView>
-    </LinearLayout>
+        </android.support.v7.widget.RecyclerView>
 </FrameLayout>

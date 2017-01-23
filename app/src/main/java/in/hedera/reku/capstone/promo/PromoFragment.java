@@ -1,6 +1,5 @@
 package in.hedera.reku.capstone.promo;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import in.hedera.reku.capstone.Main2Activity;
 import in.hedera.reku.capstone.R;
+import in.hedera.reku.capstone.Utils;
 
 
 /**
@@ -107,26 +108,16 @@ public class PromoFragment extends Fragment {
         ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Promotions");
         ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
 
-        // Create Inbox box URI
-        Uri inboxURI = Uri.parse("content://sms/inbox");
 
-        // List required columns
-        String[] reqCols = new String[] { "_id", "address", "body" };
-
-        // Get Content Resolver object, which will deal with Content Provider
-        ContentResolver cr = getActivity().getContentResolver();
-
-        String selection = "body LIKE ? OR body LIKE ?";  //"body REGEXP ?";
-        String[] selectionArgs = {"%OTP%", "%verification code%"}; // {".*OTP.*"}
-//        String selectionArgs = "WHERE x REGEXP <regex>";
-        // Fetch Inbox SMS Message from Built-in Content Provider
-        Cursor c = cr.query(inboxURI, reqCols, selection, selectionArgs, null);
+        Cursor c = Utils.getPromosCursor(getActivity());
+        Toast.makeText(getActivity(), String.valueOf(c.getCount()), Toast.LENGTH_SHORT).show();
 
         // Attached Cursor with adapter and display in listview
         adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
                 new String[] { "body", "address" }, new int[] {
                 R.id.lblMsg, R.id.lblNumber });
         lvMsg.setAdapter(adapter);
+
 
     }
     /**

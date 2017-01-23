@@ -32,7 +32,8 @@
 
         <provider
             android:name=".data.FFSmsProvider"
-            android:authorities="in.hedera.reku.capstone"></provider>
+            android:authorities="in.hedera.reku.capstone"
+            android:exported="false"></provider>
 
         <receiver
             android:name=".SmsReceiver"

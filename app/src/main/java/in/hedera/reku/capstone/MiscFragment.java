@@ -1,8 +1,6 @@
 package in.hedera.reku.capstone;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,8 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import in.hedera.reku.capstone.otp.OtpFragment;
+import android.widget.Toast;
 
 
 /**
@@ -124,32 +121,8 @@ public class MiscFragment extends Fragment {
         ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Miscellaneous");
         ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
 
-        SharedPreferences settings = getActivity().getSharedPreferences(Main2Activity.PREFS_NAME, 0);
-        String conversationIndices = settings.getString(ConversationsFragment.CONVERSAIONPREFINDICES, null);
-        String otpIndices = settings.getString(OtpFragment.OTPINDICES, null);
-
-        String concatIndices = Utils.concatIndices(conversationIndices,otpIndices);
-        // Create Inbox box URI
-        Uri inboxURI = Uri.parse("content://sms/inbox");
-
-        // List required columns
-        String[] reqCols = new String[] { "_id", "address", "body" };
-
-        // Get Content Resolver object, which will deal with Content Provider
-        ContentResolver cr = getActivity().getContentResolver();
-
-        Cursor c;
-        if(conversationIndices == null){
-            c = cr.query(inboxURI, reqCols, null, null, null);
-        }else{
-            String selection = "_id NOT IN " + concatIndices;  //"body REGEXP ?";
-            String[] selectionArgs =  null;//{conversationIndices}; // {".*OTP.*"}
-//        String selectionArgs = "WHERE x REGEXP <regex>";
-            // Fetch Inbox SMS Message from Built-in Content Provider
-            c = cr.query(inboxURI, reqCols, selection, selectionArgs, null);
-        }
-
-
+        Cursor c = Utils.getMiscCursor(getActivity());
+        Toast.makeText(getActivity(), String.valueOf(c.getCount()), Toast.LENGTH_SHORT).show();
         // Attached Cursor with adapter and display in listview
         adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
                 new String[] { "body", "address" }, new int[] {

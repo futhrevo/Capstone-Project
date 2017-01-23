@@ -1,16 +1,22 @@
 package in.hedera.reku.capstone.travel;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import in.hedera.reku.capstone.Main2Activity;
 import in.hedera.reku.capstone.R;
+
+import static in.hedera.reku.capstone.Utils.getTravelCursor;
 
 
 /**
@@ -32,6 +38,9 @@ public class TravelFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    // Cursor Adapter
+    SimpleCursorAdapter adapter;
 
     public TravelFragment() {
         // Required empty public constructor
@@ -99,6 +108,18 @@ public class TravelFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Travel");
+        ListView lvMsg = (ListView) getView().findViewById(R.id.lvMsg);
+
+
+
+        Cursor c = getTravelCursor(getActivity());
+        Toast.makeText(getActivity(), String.valueOf(c.getCount()), Toast.LENGTH_SHORT).show();
+        // Attached Cursor with adapter and display in listview
+        adapter = new SimpleCursorAdapter(getContext(), R.layout.row, c,
+                new String[] { "body", "address" }, new int[] {
+                R.id.lblMsg, R.id.lblNumber });
+        lvMsg.setAdapter(adapter);
+
     }
     /**
      * This interface must be implemented by activities that contain this

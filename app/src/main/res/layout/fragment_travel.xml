@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,54 +18,12 @@
             android:layout_marginBottom="4dp"
             >
         </fragment>
-        <fragment
+
+        <ListView
             android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.travel.TicketFragment"
-            tools:layout="@layout/sub_fragment_ticket"
-            android:id="@+id/ticket_frag2"
-            android:layout_marginBottom="4dp">
-        </fragment>
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.travel.TicketFragment"
-            tools:layout="@layout/sub_fragment_ticket"
-            android:id="@+id/ticket_frag3"
-            android:layout_marginBottom="4dp">
-        </fragment>
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.travel.TicketFragment"
-            tools:layout="@layout/sub_fragment_ticket"
-            android:id="@+id/ticket_frag4"
-            android:layout_marginBottom="4dp">
-        </fragment>
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.travel.TicketFragment"
-            tools:layout="@layout/sub_fragment_ticket"
-            android:id="@+id/ticket_frag5"
-            android:layout_marginBottom="4dp">
-        </fragment>
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.travel.TicketFragment"
-            tools:layout="@layout/sub_fragment_ticket"
-            android:id="@+id/ticket_frag6"
-            android:layout_marginBottom="4dp">
-        </fragment>
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="in.hedera.reku.capstone.travel.TicketFragment"
-            tools:layout="@layout/sub_fragment_ticket"
-            android:id="@+id/ticket_frag7"
-            android:layout_marginBottom="4dp">
-        </fragment>
+            android:id="@+id/lvMsg" />
     </LinearLayout>
 
-</ScrollView>
+</FrameLayout>

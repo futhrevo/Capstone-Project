@@ -18,11 +18,5 @@
         android:layout_height="match_parent"
         android:id="@+id/fragment_container">
     </FrameLayout>
-    <!--<fragment-->
-        <!--android:id="@+id/contentFragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--class="in.hedera.reku.capstone.travel.TravelFragment"-->
-        <!--tools:layout="@layout/fragment_travel"/>-->
 
 </RelativeLayout>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    //fragment_otp
+    <!--<fragment-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--class="in.hedera.reku.capstone.otp.OtpItemFragment"-->
+        <!--android:layout="@layout/sub_fragment_otp_item"-->
+        <!--android:id="@+id/otp_item1"-->
+        <!--android:layout_marginBottom="4dp"/>-->
+
+    //sub-fragment otp item
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:context="in.hedera.reku.capstone.otp.OtpItemFragment"-->
+        <!--android:background="@android:color/darker_gray"-->
+        <!--android:padding="2dp">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical"-->
+            <!--android:background="@android:color/white">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Aadhar(xxxx1369)"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:textSize="18sp" />-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:text="330968"-->
+                <!--android:textSize="18sp"-->
+                <!--android:letterSpacing="0.1"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textStyle="normal|bold" />-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<ProgressBar-->
+                    <!--style="?android:attr/progressBarStyleHorizontal"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/progressBar4"-->
+                    <!--android:max="100"-->
+                    <!--android:progress="85"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_weight="3" />-->
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="27:04"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:textAlignment="center" />-->
+            <!--</LinearLayout>-->
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/otpbody"/>-->
+
+        <!--</LinearLayout>-->
+
+
+    <!--</FrameLayout>-->
+
+    //subfragment bill item
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:context="in.hedera.reku.capstone.bills.BillFragment"-->
+        <!--android:background="@android:color/darker_gray"-->
+        <!--android:padding="2dp">-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@android:color/white">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Biller Name"-->
+                <!--android:id="@+id/text_biller"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:textStyle="normal|bold"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textSize="16sp"/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Account: 3020178590"-->
+                <!--android:layout_below="@+id/text_biller"-->
+                <!--android:textColor="@android:color/darker_gray"-->
+                <!--android:layout_margin="10dp" />-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="\u20B9 900"-->
+                <!--android:id="@+id/text_amount"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:textStyle="normal|bold"-->
+                <!--android:textSize="18sp"-->
+                <!--android:textColor="@color/colorAccent"/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Due on Tomorrow"-->
+                <!--android:id="@+id/text_due"-->
+                <!--android:layout_below="@+id/text_amount"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:textStyle="normal|bold"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentEnd="true"/>-->
+        <!--</RelativeLayout>-->
+
+    <!--</FrameLayout>-->
+
+</LinearLayout>

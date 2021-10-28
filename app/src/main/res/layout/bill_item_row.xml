@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Left Swipe Layout-->
+    <include layout="@layout/swipe_left_row_item" android:visibility="invisible" />
+    <!-- Right Swipe Layout-->
+    <include layout="@layout/swipe_right_row_item" android:visibility="invisible"/>
+    <!-- Regular Layout-->
+    <include layout="@layout/sub_fragment_bill"/>
+</FrameLayout>

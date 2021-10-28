@@ -1,6 +1,7 @@
 package in.hedera.reku.capstone.bills;
 
 import android.database.Cursor;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import in.hedera.reku.capstone.Main2Activity;
 import in.hedera.reku.capstone.R;
 import in.hedera.reku.capstone.Utils;
+import in.hedera.reku.capstone.helper.ItemTouchHelperSimpleCallback;
 
 
 /**
@@ -26,6 +29,7 @@ public class BillsFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private RecyclerView recyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
+    private Paint p = new Paint();
     // Cursor Adapter
     BillsAdapter adapter;
 
@@ -56,6 +60,7 @@ public class BillsFragment extends Fragment implements LoaderManager.LoaderCallb
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
+        initSwipe();
         return rootView;
     }
 
@@ -64,10 +69,6 @@ public class BillsFragment extends Fragment implements LoaderManager.LoaderCallb
         getLoaderManager().initLoader(Utils.BILLS_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
         ((Main2Activity) getActivity()).getSupportActionBar().setTitle("Bills");
-
-
-
-
     }
 
 
@@ -86,4 +87,9 @@ public class BillsFragment extends Fragment implements LoaderManager.LoaderCallb
         adapter.swapCursor(null);
     }
 
+    private void initSwipe(){
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelperSimpleCallback(recyclerView, getContext());
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
 }

@@ -22,4 +22,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="archived_label">Archive</string>
+    <string name="undo_label">undo</string>
+    <string name="Actions">Actions</string>
+    <string name="confirm">Confirm</string>
 </resources>
